@@ -7,19 +7,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import patienthub.demo.dao.Patient;
-import patienthub.demo.exception.CustomException;
+import patienthub.demo.customExceptions.CustomException;
 import patienthub.demo.service.IPatientService;
 import patienthub.demo.util.Exceptions;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/patient")
 public class PatientController {
     private static final Logger log = LogManager.getLogger(PatientController.class);
     @Autowired
-    public IPatientService patientService;
-    @GetMapping("/patient/id/{id}")
+    private IPatientService patientService;
+    @GetMapping("/id/{id}")
     public ResponseEntity<Patient> getPatient(@PathVariable("id") String id){
         Patient patient = null;
         try {
@@ -30,7 +32,7 @@ public class PatientController {
         return new ResponseEntity<>(patient, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/patient")
+    @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients(){
         List<Patient> patientList = null;
         try {
@@ -41,8 +43,8 @@ public class PatientController {
         return new ResponseEntity<>(patientList, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/patient")
-    public ResponseEntity<String> createPatient(@RequestBody Patient patient){
+    @PostMapping
+    public ResponseEntity<String> createPatient(@Valid @RequestBody Patient patient){
         Patient createdPatient = null;
         try {
             createdPatient = patientService.createPatient(patient);
@@ -53,7 +55,7 @@ public class PatientController {
         return new ResponseEntity<>(createdPatient != null ? createdPatient.getPatientId().toString() : Exceptions.PATIENT_CREATION_FAILED.toString(), HttpStatus.CREATED);
     }
 
-    @PutMapping("/patient/id/{id}")
+    @PutMapping("/id/{id}")
     public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient,@PathVariable("id") String patientId ){
         Patient updatedPatient = null;
         try {
@@ -70,7 +72,7 @@ public class PatientController {
         return new ResponseEntity<>(updatedPatient, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/patient/id/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<?> deletePatient(@PathVariable("id") String patientId){
         patientService.deletePatient(UUID.fromString(patientId));
         return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);

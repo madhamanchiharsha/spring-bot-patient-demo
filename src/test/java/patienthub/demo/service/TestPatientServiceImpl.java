@@ -1,6 +1,5 @@
 package patienthub.demo.service;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -8,16 +7,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import patienthub.demo.dao.Patient;
-import patienthub.demo.exception.CustomException;
+import patienthub.demo.customExceptions.CustomException;
 import patienthub.demo.repository.IPatientRepository;
 import patienthub.demo.service.impl.PatientServiceImpl;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

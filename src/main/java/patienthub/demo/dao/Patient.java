@@ -1,8 +1,14 @@
 package patienthub.demo.dao;
 
 import lombok.*;
+import org.springframework.lang.NonNull;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Getter
@@ -16,10 +22,13 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID patientId;
     @Column(nullable = false)
+    @NotBlank(message = "Patient Name cannot be null")
     private String patientName;
     @Column(nullable = false)
+    @NotBlank(message="Patient mobile number cannot be null")
     private String mobileNumber;
     @Column(nullable = false)
+    @NotBlank(message="Patient email cannot be null")
     private String email;
 
     public UUID getPatientId() {

@@ -5,9 +5,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import patienthub.demo.dao.Patient;
-import patienthub.demo.exception.CustomException;
+import patienthub.demo.customExceptions.CustomException;
 import patienthub.demo.repository.IPatientRepository;
 import patienthub.demo.service.IPatientService;
 import patienthub.demo.util.Constants;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Configuration
 public class PatientServiceImpl implements IPatientService {
     private static final Logger log = LogManager.getLogger(PatientServiceImpl.class);
     @Autowired
@@ -75,7 +77,7 @@ public class PatientServiceImpl implements IPatientService {
     }
 
     @Override
-    @CacheEvict("patient")
+    @CacheEvict(value="patient", key="#patientId")
     public void deletePatient(UUID patientId) {
         try{
         patientRepository.deleteById(patientId);

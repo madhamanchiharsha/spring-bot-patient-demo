@@ -1,7 +1,7 @@
 package patienthub.demo.service;
 
 import patienthub.demo.dao.Patient;
-import patienthub.demo.exception.CustomException;
+import patienthub.demo.customExceptions.CustomException;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package patienthub.demo.exception;
+package patienthub.demo.customExceptions;
 
 public class CustomException extends Exception{
 
